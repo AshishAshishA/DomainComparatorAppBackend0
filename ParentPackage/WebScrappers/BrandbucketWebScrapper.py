@@ -36,10 +36,13 @@ class BrandbucketDomainList:
 
         with open(f"data/{self.domainName}.html","w",encoding="utf-8") as f:
             for elem in elems:
-                d = elem.get_attribute("outerHTML")
-                f.write(d)
-            
-        time.sleep(10)
+                try:
+                    d = elem.get_attribute("outerHTML")
+                    f.write(d)
+                except Exception as e:
+                    print('Brandbucket create_file exception -> ',e)
+                
+        time.sleep(2)
 
         elems.clear()
         driver.close()
@@ -77,7 +80,7 @@ class BrandbucketDomainList:
         file_path = f"data/{self.domainName}.html"
 
         if os.path.exists(file_path):
-            time.sleep(5)
+            time.sleep(2)
             os.remove(file_path)
             print("File deleted successfully!")
         else:

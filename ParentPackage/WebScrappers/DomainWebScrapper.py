@@ -31,16 +31,18 @@ class DomainDomainList:
     def create_file(self):
         driver = webdriver.Chrome()
         driver.get(f"https://www.domain.com/registration/?flow=jdomainDFE&endpoint=jarvis&search={self.domainName}#/jdomainDFE/1")
-        time.sleep(100)
+        time.sleep(2)
         elems = driver.find_elements(By.CLASS_NAME, "suggestion-wrapper")
 
         with open(f"data/{self.domainName}.html","w",encoding="utf-8") as f:
             for elem in elems:
-                d = elem.get_attribute("outerHTML")
-                f.write(d)
-            
-        time.sleep(10)
-
+                try:
+                    d = elem.get_attribute("outerHTML")
+                    f.write(d)
+                except Exception as e:
+                    print('Domain.com create_file exception -> ',e)
+                    
+        time.sleep(2)
         elems.clear()
         driver.close()
 
@@ -75,7 +77,7 @@ class DomainDomainList:
         file_path = f"data/{self.domainName}.html"
 
         if os.path.exists(file_path):
-            time.sleep(5)
+            time.sleep(2)
             os.remove(file_path)
             print("File deleted successfully!")
         else:
@@ -89,3 +91,7 @@ if __name__ == "__main__":
     # domainListObject = porkbunDomainList.create_dict()
     # print(domainListObject)
     # porkbunDomainList.delete_file()
+
+
+
+#not working

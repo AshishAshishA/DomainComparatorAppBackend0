@@ -31,16 +31,18 @@ class NamecheapDomainList:
     def create_file(self):
         driver = webdriver.Chrome()
         driver.get(f"https://www.namecheap.com/domains/registration/results/?domain={self.domainName}")
-        time.sleep(10)
+        time.sleep(2)
         elems = driver.find_elements(By.TAG_NAME, "article")
 
         with open(f"data/{self.domainName}.html","w",encoding="utf-8") as f:
             for elem in elems:
-                d = elem.get_attribute("outerHTML")
-                f.write(d)
-            
-        time.sleep(10)
+                try:
+                    d = elem.get_attribute("outerHTML")
+                    f.write(d)
+                except Exception as e:
+                    print("NameCheap File-Create exception -> ",e)
 
+        time.sleep(2) 
         elems.clear()
         driver.close()
 
@@ -75,7 +77,7 @@ class NamecheapDomainList:
         file_path = f"data/{self.domainName}.html"
 
         if os.path.exists(file_path):
-            time.sleep(5)
+            time.sleep(2)
             os.remove(file_path)
             print("File deleted successfully!")
         else:

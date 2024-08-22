@@ -31,16 +31,18 @@ class PorkbunDomainList:
     def create_file(self):
         driver = webdriver.Chrome()
         driver.get(f"https://porkbun.com/checkout/search?prb=769bc09b57&q={self.domainName}.com&tlds=&idnLanguage=&search=search&csrf_pb=4bfc194a0209b0b2d60ce9fe459e76a1")
-        time.sleep(10)
+        time.sleep(2)
         elems = driver.find_elements(By.CLASS_NAME, "searchResultRowTable")
 
         with open(f"data/{self.domainName}.html","w",encoding="utf-8") as f:
             for elem in elems:
-                d = elem.get_attribute("outerHTML")
-                f.write(d)
-            
-        time.sleep(10)
-
+                try:
+                    d = elem.get_attribute("outerHTML")
+                    f.write(d)
+                except:
+                    print("NameCheap File-Create exception -> ",e)
+                    
+        time.sleep(2)
         elems.clear()
         driver.close()
 
@@ -75,7 +77,7 @@ class PorkbunDomainList:
         file_path = f"data/{self.domainName}.html"
 
         if os.path.exists(file_path):
-            time.sleep(5)
+            time.sleep(2)
             os.remove(file_path)
             print("File deleted successfully!")
         else:

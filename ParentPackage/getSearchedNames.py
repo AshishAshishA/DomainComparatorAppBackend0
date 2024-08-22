@@ -17,10 +17,10 @@ if r.status_code == 200:
         stayIndex = searchedObject.get('stayIndex')
     
         if stayIndex > 0:
-            # post_client_object.PorkbunPost(search_name)
-            # post_client_object.NamecheapPost(search_name)
-            # post_client_object.SedoPost(search_name)
-            # post_client_object.DynadotPost(search_name)
+            post_client_object.PorkbunPost(search_name)
+            post_client_object.NamecheapPost(search_name)
+            post_client_object.SedoPost(search_name)
+            post_client_object.DynadotPost(search_name)
             post_client_object.BrandbucketPost(search_name)
 
             time.sleep(2)
